@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap 实例 - 水平表单</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+</head>
+<body>
+
+<form class="form-horizontal" role="form" id="app">
+    <div class="form-group">
+        <label for="firstname" class="col-sm-2 control-label">名字</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" v-model="uname"
+                   placeholder="请输入名字">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">密码</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control"  v-model="upwd"
+                   placeholder="请输密码">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> 请记住我
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" @click="login()" class="btn btn-default">登录</button>
+        </div>
+    </div>
+</form>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data:{
+           uname:"",
+           upwd:""
+        },
+        methods:{
+            login:function(){
+                console.log(this.uname)
+                //发送 post 请求
+                this.$http.post('/t2',{uname:this.uname,upwd:this.upwd},{emulateJSON:true}).then(function(res){
+                    document.write(res.body.key);
+                },function(res){
+                    console.log(res.status);
+                });
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
